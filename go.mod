@@ -11,7 +11,7 @@ require (
 	github.com/goccy/go-yaml v1.11.2
 	github.com/onsi/ginkgo/v2 v2.14.0
 	github.com/onsi/gomega v1.30.0
-	github.com/siberia-projects/siberia-env v1.0.1
+	github.com/siberia-projects/siberia-env v1.0.2
 	github.com/stretchr/testify v1.6.1
 )
 
