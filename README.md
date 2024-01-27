@@ -3,6 +3,8 @@ Siberia Configuration Properties
 
 [![Author](https://img.shields.io/badge/author-@siberia_projects-green.svg)](https://github.com/siberia-projects/siberia-configuration-properties)
 [![Source Code](https://img.shields.io/badge/source-siberia/main-blue.svg)](https://github.com/siberia-projects/siberia-configuration-properties)
+![Version](https://img.shields.io/badge/version-v1.0.2-green.svg)
+[![Coverage Status](https://coveralls.io/repos/github/siberia-projects/siberia-configuration-properties/badge.svg?branch=main)](https://coveralls.io/github/siberia-projects/siberia-configuration-properties?branch=main)
 
 ## What is it?
 Siberia-configuration-properties is a library which provides a convenient way of
