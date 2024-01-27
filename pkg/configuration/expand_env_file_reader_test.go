@@ -84,7 +84,7 @@ var _ = Describe(
 				It("should return an error", func() {
 					// given
 					tmpFileContent := "${UNKNOWN_ENV_VARIABLE}"
-					tmpFilepath := "/tmp/empty_file.txt"
+					tmpFilepath := "empty_file.txt"
 
 					// when / then
 					err := os.WriteFile(tmpFilepath, []byte(tmpFileContent), 777)
@@ -106,7 +106,7 @@ var _ = Describe(
 				It("should return an error", func() {
 					// given
 					tmpFileContent := "${UNKNOWN_ENV_VARIABLE:with_default_value}"
-					tmpFilepath := "/tmp/empty_file.txt"
+					tmpFilepath := "empty_file.txt"
 
 					// when / then
 					instanceCreator.On("Create", mock.Anything).
@@ -132,7 +132,7 @@ var _ = Describe(
 				It("should return a new instance of an appropriate configuration", func() {
 					// given
 					tmpFileContent := "${UNKNOWN_ENV_VARIABLE:with_default_value}"
-					tmpFilepath := "/tmp/empty_file.txt"
+					tmpFilepath := "empty_file.txt"
 
 					// when / then
 					instanceCreator.On("Create", mock.Anything).
