@@ -1,0 +1,49 @@
+name: "Siberia-configuration-properties pipeline"
+
+on:
+  push:
+    paths:
+      - "pkg/**"
+      - "go.mod"
+      - "go.sum"
+
+jobs:
+  unit_test:
+    name: "Unit testing"
+    strategy:
+      matrix:
+        go-version: [
+          1.20.x,
+          1.21.x,
+        ]
+        platform: [
+          ubuntu-latest,
+          windows-latest,
+          macos-latest,
+        ]
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Fetch Repository
+        uses: actions/checkout@v4
+
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Restore Cache
+        uses: actions/cache@v3
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-v1-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-v1-go-
+
+      - name: Test
+        run: go test -covermode=atomic -coverprofile="profile.cov" ./...
+
+      - name: Send Coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.go-version == '1.21.x'
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: profile.cov
