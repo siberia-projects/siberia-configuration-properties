@@ -1,6 +1,7 @@
 name: "Siberia-configuration-properties pipeline"
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - "pkg/**"
