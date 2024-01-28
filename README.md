@@ -3,7 +3,7 @@ Siberia Configuration Properties
 
 [![Author](https://img.shields.io/badge/author-@siberia_projects-green.svg)](https://github.com/siberia-projects/siberia-configuration-properties)
 [![Source Code](https://img.shields.io/badge/source-siberia/main-blue.svg)](https://github.com/siberia-projects/siberia-configuration-properties)
-![Version](https://img.shields.io/badge/version-v1.0.2-green.svg)
+![Version](https://img.shields.io/badge/version-v1.1.0-orange.svg)
 [![Coverage Status](https://coveralls.io/repos/github/siberia-projects/siberia-configuration-properties/badge.svg?branch=main)](https://coveralls.io/github/siberia-projects/siberia-configuration-properties?branch=main)
 
 ## What is it?
@@ -38,8 +38,7 @@ parse the config into the model using the tools:
  - Declare a structure in a way it implements the **Properties** interface
 (it provides a starting point where your data really begins (could be empty - which literally means
 "all"))
- - Create an instance of **ExpandEnvFileReader**
- - Read your configuration file using the reader
+ - Read your configuration file a **ReadConfiguration(ConfigurationPath)** method
  - (Optional) Create a **SimpleSeparator**
  - Create an instance of your data model
  - Call **Configuration.WriteTo(Properties)** method or use the **Separator.Separate(Configuration, Properties)**
@@ -103,38 +102,27 @@ func (properties *NotMyProperties) String() string {
 }
 
 func main() {
-	yamlInstanceCreator := configuration.NewYamlInstanceCreator()
-	instanceCreators := []configuration.InstanceCreator{yamlInstanceCreator}
-
-	configurationReader, err := configuration.NewExpandEnvFileReader(instanceCreators)
+	configurationInstance, err := configuration.ReadConfiguration(configFilepath)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	configurationInstance, err := configurationReader.Read(configFilepath)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	propertiesSeparator := configuration.NewSimpleSeparator()
 	customProperties := &CustomProperties{}
+	notMyProperties := &NotMyProperties{}
 
-	err = propertiesSeparator.Separate(configurationInstance, customProperties)
+	err = configurationInstance.WriteTo(customProperties)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	err = configurationInstance.WriteTo(notMyProperties)
 	if err != nil {
 		panic(err.Error())
 	}
 
 	customPropertiesString := customProperties.String()
-
-	notMyProperties := &NotMyProperties{}
-
-	err = propertiesSeparator.Separate(configurationInstance, notMyProperties)
-	if err != nil {
-		panic(err.Error())
-	}
-
 	notMyPropertiesString := notMyProperties.String()
-	
+
 	println(customPropertiesString)
 	println(notMyPropertiesString)
 }
