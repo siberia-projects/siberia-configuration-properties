@@ -1,7 +1,9 @@
 // Copyright (c) 2024 Nikolai Osipov <nao99.dev@gmail.com>
 //
 // All rights are reserved
-// Information about license can be found in the LICENSE file
+//
+// Information about a license can be found in a LICENSE file
+// in a root of the project
 
 module github.com/siberia-projects/siberia-configuration-properties
 
@@ -11,7 +13,7 @@ require (
 	github.com/goccy/go-yaml v1.11.2
 	github.com/onsi/ginkgo/v2 v2.14.0
 	github.com/onsi/gomega v1.30.0
-	github.com/siberia-projects/siberia-env v1.0.2
+	github.com/siberia-projects/siberia-env v1.1.0
 	github.com/stretchr/testify v1.6.1
 )
 

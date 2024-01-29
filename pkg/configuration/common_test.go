@@ -1,7 +1,9 @@
 // Copyright (c) 2024 Nikolai Osipov <nao99.dev@gmail.com>
 //
 // All rights are reserved
-// Information about license can be found in the LICENSE file
+//
+// Information about a license can be found in a LICENSE file
+// in a root of the project
 
 package configuration
 
