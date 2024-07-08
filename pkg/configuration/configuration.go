@@ -15,6 +15,11 @@ type Configuration interface {
 	//
 	// Returns an error when something was wrong
 	WriteTo(properties Properties) error
+
+	// ReadString reads a single property
+	//
+	// Returns an error when property was not existed
+	ReadString(prefix string) (string, error)
 }
 
 // ReadConfiguration is a default method to read a Configuration

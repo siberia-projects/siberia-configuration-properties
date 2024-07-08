@@ -8,6 +8,7 @@
 package configuration
 
 import (
+	"fmt"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -142,6 +143,53 @@ var _ = Describe(
 
 					Expect(properties.Data).ToNot(BeEmpty())
 					Expect(properties.AdditionalField).ToNot(BeEmpty())
+				})
+			})
+		})
+
+		When("a reading a single property is going", func() {
+			Context("and requested property exists", func() {
+				Context("and the property is empty", func() {
+					DescribeTable(
+						"should return its value with no error",
+						func(initialValue string, expectedReadValue string) {
+							// given
+							content := fmt.Sprintf(
+								"notSimple:\n  prefix: %s",
+								initialValue,
+							)
+
+							contentBytes := []byte(content)
+							config := NewYamlConfiguration(contentBytes)
+
+							// when
+							value, err := config.ReadString("notSimple.prefix")
+
+							// then
+							Expect(err).To(BeNil())
+							Expect(value).To(Equal(expectedReadValue))
+						},
+						Entry("a value is empty", "", ""),
+						Entry("a value is not empty", "value", "value"),
+						Entry("a value is a key", "\n    john: doe", "john: doe"),
+					)
+				})
+			})
+
+			Context("and requested property doesn't exist", func() {
+				It("should return an empty value and an error", func() {
+					// given
+					content := "notSimple:\n  prefix:\n    additionalField: value\n    data:"
+					contentBytes := []byte(content)
+
+					config := NewYamlConfiguration(contentBytes)
+
+					// when
+					value, err := config.ReadString("notSimple.prefix.additionalField.data.key")
+
+					// then
+					Expect(err).ToNot(BeNil())
+					Expect(value).To(Equal(""))
 				})
 			})
 		})
