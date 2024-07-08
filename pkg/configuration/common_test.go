@@ -47,6 +47,10 @@ func (configuration *simpleConfiguration) WriteTo(properties Properties) error {
 	return arguments.Error(0)
 }
 
+func (configuration *simpleConfiguration) ReadString(_ string) (string, error) {
+	return "", nil
+}
+
 type txtInstanceCreator struct {
 	mock.Mock
 }
